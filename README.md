@@ -1,1 +1,1 @@
-# Balatro Loader
+# Baloader
