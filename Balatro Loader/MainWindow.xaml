@@ -1,0 +1,69 @@
+﻿<Window x:Class="Balatro_Loader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Balatro_Loader"
+        Title="Baloader" Height="600" Width="1000">
+    <Window.Resources>
+        <local:StringArrayToStringConverter x:Key="StringArrayToStringConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="10">
+            <Button Content="Set Game Directory" Width="150" Margin="10" Click="SetGameDirectoryButton_Click"/>
+            <TextBlock Text="Downloaded Mods" Margin="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <Button Content="Refresh" Width="150" Margin="10" Click="RefreshModsButton_Click"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="390">
+                <ListView x:Name="storedModsListView" Margin="10">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Stored Mod Name" DisplayMemberBinding="{Binding Name}" Width="160"/>
+                            <GridViewColumn Header="Actions" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="Edit" Click="EditModButton_Click" Margin="5"/>
+                                            <Button Content="Add" Click="AddModToProfileButton_Click" Margin="5"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+            <Button Content="Import Mod" Width="150" Margin="5" Click="ImportModButton_Click"/>
+            <Button Content="Convert Old Metadata" Width="150" Margin="5" Click="ConvertOldMetadataButton_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="10">
+            <Button Content="Download Dependencies" Width="300" Margin="5" Click="DownloadDependenciesButton_Click"/>
+            <TextBlock x:Name="downloadStatusTextBlock" Text="Download Status: Idle" Margin="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="currentProfileTextBlock" Text="{Binding CurrentProfile, StringFormat='Current Profile: {0}'}" Margin="10" FontWeight="Bold"/>
+            <Button Content="Change Profile" Width="150" Margin="10" Click="OpenProfileSelectionWindowButton_Click"/>
+            <TextBox x:Name="modUrlTextBox" Width="300" Margin="10" Text="Enter mod URL"/>
+            <Button Content="Download Mod" Width="100" Margin="5" Click="DownloadModButton_Click"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="200">
+                <ListView x:Name="profileModsListView" Grid.Column="1" Margin="10">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mod Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                            <GridViewColumn Header="Author" DisplayMemberBinding="{Binding Author, Converter={StaticResource StringArrayToStringConverter}}" Width="150"/>
+                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                            <GridViewColumn Header="Version" DisplayMemberBinding="{Binding Version}" Width="100"/>
+                            <GridViewColumn Header="Actions" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Remove" Click="RemoveModFromProfileButton_Click" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+            <Button Content="Install Mods" Width="150" Margin="10" Click="InstallModsButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
